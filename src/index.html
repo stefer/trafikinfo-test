@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="myApp">
+<html ng-app="TrafikinfoApp">
 <head>
 <title>Trafikinfo Test</title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -19,7 +19,7 @@
         <br><br>
         
         <input type="text" placeholder="Station" ng-model="selectedStation"
-typeahead="station as station.AdvertisedLocationName for station in stations | filter:$viewValue | limitTo:10" typeahead-min-length='1' class="form-control ng-valid ng-dirty ng-valid-editable" typeahead-on-select="onSelectPart($item, $model, $label)" typeahead-template-url="customTemplate.html" >
+typeahead="station as station.AdvertisedLocationName for station in stations | filter:$viewValue | limitTo:10" typeahead-min-length='1' class="form-control ng-valid ng-dirty ng-valid-editable" typeahead-on-select="onSelectStation($item, $model, $label)" typeahead-template-url="customTemplate.html" >
 
         <ul class="dropdown-menu ng-isolate-scope" typeahead-popup="" matches="matches" active="activeIdx" select="select(activeIdx)" query="query" position="position" template-url="customTemplate.html" style="display: none; top: 220px; left: 15px;">
     <!-- ngRepeat: match in matches -->
@@ -27,12 +27,18 @@ typeahead="station as station.AdvertisedLocationName for station in stations | f
         <i class="icon-search nav-search-icon"></i>
 </form>
     
+<script src="js/angular.min.js"></script>
+<script src="js/ui-bootstrap-tpls-0.9.0.js"></script>
+<script src="js/app.js"></script>
+<script src="js/services.js"></script>
+<script src="js/controllers.js"></script>
 
-</div>
-<script src="angular.min.js"></script>
-<script src="ui-bootstrap-tpls-0.9.0.js"></script>
-<script src="traininfo.js"></script>
-
+<script>
+    function onSelectStation($item, $model, $label) {
+            
+    }
+</script>    
+    
 </body>
 
 </html>
