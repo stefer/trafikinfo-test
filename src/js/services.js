@@ -4,7 +4,9 @@ angular.module('Trafikinfo.services', [])
         var trafikInfoAPI = { };
         var baseUrl = "http://api.trafikinfo.trafikverket.se/v1/data.json";
         var authKey = "0f6e8fc7f2c34aa58cf8de26cc592617";
-        var trainStationRequest =
+    
+        trafikInfoAPI.getStations = function() {
+            var trainStationRequest =
                 "<REQUEST>" +
                 "<LOGIN authenticationkey='" + authKey + "' />" +
                 "<QUERY objecttype='TrainStation'>" +
@@ -14,11 +16,46 @@ angular.module('Trafikinfo.services', [])
                     "<INCLUDE>LocationSignature</INCLUDE>" +
                 "</QUERY>" +
                 "</REQUEST>";
-    
-        trafikInfoAPI.getStations = function() {
+            
             return $http.post(
                 baseUrl,
                 trainStationRequest,
+                { headers: { 'Content-Type': 'text/xml' }});
+        }
+        
+        trafikInfoAPI.getAnnouncements = function(stationSign) {
+            var announcementsRequest = 
+                "<REQUEST version='1.0'>" +
+                    "<LOGIN authenticationkey='" + authKey + "' />" +
+                    "<QUERY objecttype='TrainAnnouncement' " +
+                        "orderby='AdvertisedTimeAtLocation' >" +
+                        "<FILTER>" +
+                        "<AND>" +
+                            "<OR>" +
+                                "<AND>" +
+                                    "<GT name='AdvertisedTimeAtLocation' " +
+                                                "value='$dateadd(-00:15:00)' />" +
+                                    "<LT name='AdvertisedTimeAtLocation' " +
+                                                "value='$dateadd(14:00:00)' />" +
+                                "</AND>" +
+                                "<GT name='EstimatedTimeAtLocation' value='$now' />" +
+                            "</OR>" +
+                            "<EQ name='LocationSignature' value='" + stationSign + "' />" +
+                            "<EQ name='ActivityType' value='Avgang' />" +
+                        "</AND>" +
+                        "</FILTER>" +
+                        // Just include wanted fields to reduce response size.
+                        "<INCLUDE>InformationOwner</INCLUDE>" +
+                        "<INCLUDE>AdvertisedTimeAtLocation</INCLUDE>" +
+                        "<INCLUDE>TrackAtLocation</INCLUDE>" +
+                        "<INCLUDE>FromLocation</INCLUDE>" +
+                        "<INCLUDE>ToLocation</INCLUDE>" +
+                    "</QUERY>" +
+                "</REQUEST>";
+            
+            return $http.post(
+                baseUrl,
+                announcementsRequest,
                 { headers: { 'Content-Type': 'text/xml' }});
         }
         
