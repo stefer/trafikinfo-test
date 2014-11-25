@@ -7,37 +7,50 @@
 
 <body>
 
-<script type="text/ng-template" id="customTemplate.html">
-  <a>
-      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
-      <i>({{match.model.AdvertisedLocationName}})</i>
-  </a>
-</script>
+    <script type="text/ng-template" id="customTemplate.html">
+      <a>
+          <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+          <i>({{match.model.AdvertisedLocationName}})</i>
+      </a>
+    </script>
     
     <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="stationsController">
         <pre> Model: {{selectedStation | json}}</pre>
         <br><br>
         
-        <input type="text" placeholder="Station" ng-model="selectedStation"
-typeahead="station as station.AdvertisedLocationName for station in stations | filter:$viewValue | limitTo:10" typeahead-min-length='1' class="form-control ng-valid ng-dirty ng-valid-editable" typeahead-on-select="onSelectStation($item, $model, $label)" typeahead-template-url="customTemplate.html" >
+        <input type="text" 
+               placeholder="Station" 
+               ng-model="selectedStation"
+               typeahead="station as station.AdvertisedLocationName for station in stations | filter:$viewValue | limitTo:10"  
+               typeahead-min-length='1' class="form-control ng-valid ng-dirty ng-valid-editable" 
+               typeahead-on-select="onSelectStation($item, $model, $label)" 
+               typeahead-template-url="customTemplate.html" >
 
-        <ul class="dropdown-menu ng-isolate-scope" typeahead-popup="" matches="matches" active="activeIdx" select="select(activeIdx)" query="query" position="position" template-url="customTemplate.html" style="display: none; top: 220px; left: 15px;">
-    <!-- ngRepeat: match in matches -->
-</ul>
+        <ul class="dropdown-menu ng-isolate-scope" 
+            typeahead-popup="" 
+            matches="matches" 
+            active="activeIdx" 
+            select="select(activeIdx)" 
+            query="query" 
+            position="position" 
+            template-url="customTemplate.html" 
+            style="display: none; top: 220px; left: 15px;">
+            <!-- ngRepeat: match in matches -->
+        </ul>
         <i class="icon-search nav-search-icon"></i>
-</form>
+    </form>
     
-<script src="js/angular.min.js"></script>
-<script src="js/ui-bootstrap-tpls-0.9.0.js"></script>
-<script src="js/app.js"></script>
-<script src="js/services.js"></script>
-<script src="js/controllers.js"></script>
+    <script src="js/angular.min.js"></script>
+    <script src="js/ui-bootstrap-tpls-0.9.0.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
 
-<script>
-    function onSelectStation($item, $model, $label) {
-            
-    }
-</script>    
+    <script>
+        function onSelectStation($item, $model, $label) {
+
+        }
+    </script>    
     
 </body>
 
