@@ -2,6 +2,8 @@ trafikinfo-test
 ===============
 Test of Trafikverket Öppet API, https://www.trafiklab.se/.
 
+Test it here: http://cdn.rawgit.com/stefer/trafikinfo-test/master/src/index.html
+
 
 References
 ----------
