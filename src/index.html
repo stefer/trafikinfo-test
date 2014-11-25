@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html ng-app="TrafikinfoApp">
 <head>
+<meta charset="UTF-8">
 <title>Trafikinfo Test</title>
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
@@ -14,12 +15,15 @@
       </a>
     </script>
     
-    <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="stationsController">        
+    <div class="container-fluid">
+    <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="stationsController"> 
+        <h1>Avgångar</h1>
         <input type="text" 
                placeholder="Station" 
                ng-model="selectedStation"
                typeahead="station as station.AdvertisedLocationName for station in stations | filter:$viewValue | limitTo:10"  
-               typeahead-min-length='1' class="form-control ng-valid ng-dirty ng-valid-editable" 
+               typeahead-min-length='1' 
+               class="form-control ng-valid-editable" 
                typeahead-on-select="getAnnouncements($model.LocationSignature)" 
                typeahead-template-url="customTemplate.html" >
 
@@ -34,28 +38,29 @@
             style="display: none; top: 220px; left: 15px;">
             <!-- ngRepeat: match in matches -->
         </ul>
-
-        <table>
+        <br><br>
+        <table class="table table-striped">
             <tr>
                 <th>Tid</th>
                 <th>Till</th>
                 <th>Spår</th>
             </tr>
             <tr ng-repeat="x in announcements">
-                <td>{{x.AdvertisedTimeAtLocation}}</td>
-                <td>{{x.ToLocation}}</td>
+                <td>{{x.AdvertisedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
+                <td>{{x.ToLocation | stationIdsToNames:this}}</td>
                 <td>{{x.TrackAtLocation}}</td>            
             </tr>
         </table>
 
     </form>
+    </div>
     
     
     <script src="js/angular.min.js"></script>
     <script src="js/ui-bootstrap-tpls-0.9.0.js"></script>
     <script src="js/app.js"></script>
     <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>  
+    <script src="js/controllers.js"></script>
     
 </body>
 
