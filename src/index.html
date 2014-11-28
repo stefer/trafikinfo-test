@@ -44,11 +44,13 @@
                 <th>Tid</th>
                 <th>Till</th>
                 <th>Spår</th>
+                <th>Tåg</th>
             </tr>
-            <tr ng-repeat="x in announcements">
+            <tr ng-repeat="x in announcements" ng-class="{danger: x.Canceled, warning:x.Deviation }">
                 <td>{{x.AdvertisedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
                 <td>{{x.ToLocation | stationIdsToNames:this}}</td>
                 <td>{{x.TrackAtLocation}}</td>            
+                <td>{{x.AdvertisedTrainIdent}}</td>            
             </tr>
         </table>
 

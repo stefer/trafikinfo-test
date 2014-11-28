@@ -27,4 +27,10 @@ angular
         .map(function(stationId) {return scope.getStation(stationId).AdvertisedLocationName})
         .join(', ');
     };
-});;
+})
+.filter('arrayToList', function () {
+    return function (input, delim) {
+        return (input || [])
+        .join(delim || ', ');
+    };
+});

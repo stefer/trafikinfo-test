@@ -50,6 +50,10 @@ angular.module('Trafikinfo.services', [])
                         "<INCLUDE>TrackAtLocation</INCLUDE>" +
                         "<INCLUDE>FromLocation</INCLUDE>" +
                         "<INCLUDE>ToLocation</INCLUDE>" +
+                        "<INCLUDE>AdvertisedTrainIdent</INCLUDE>" +
+                        "<INCLUDE>Canceled</INCLUDE>" +
+                        "<INCLUDE>Deviation</INCLUDE>" +
+                        "<INCLUDE>EstimatedTimeAtLocation</INCLUDE>" +
                     "</QUERY>" +
                 "</REQUEST>";
             
