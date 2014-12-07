@@ -44,7 +44,6 @@ describe('Unit: stationsController', function () {
         });
         
         it('should set $scope.stations', function () {
-            
             deferred.resolve({
                 "RESPONSE": {"RESULT": [{"TrainStation": [
                     {"AdvertisedLocationName": "Västeraspby", "LocationSignature": "Väy", "Prognosticated": true},
@@ -77,5 +76,18 @@ describe('Unit: stationsController', function () {
                   .toBe("Västeraspby, Nässjö C, Källene, Järpås");
         }));
         
+        it('should skip invalid signatures', inject(function ($filter) {
+            expect($filter('stationIdsToNames')(["Väy",  "N", "KäeFel", "Jps"], scope))
+                  .toBe("Västeraspby, Nässjö C, Järpås");
+        }));
+        
+        it('should cope with empty list', inject(function ($filter) {
+            expect($filter('stationIdsToNames')([], scope)).toBe("");
+        }));
+
+        it('should cope with null', inject(function ($filter) {
+            expect($filter('stationIdsToNames')(null, scope)).toBe("");
+        }));
+
     });
 });

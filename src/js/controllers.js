@@ -26,7 +26,9 @@ angular.module('Trafikinfo.controllers', [])
         "use strict";
         return function (input, scope) {
             return (input || [])
-                .map(function (stationId) { return scope.getStation(stationId).AdvertisedLocationName; })
+                .map(function (stationId) { return scope.getStation(stationId); })
+                .filter(function (station) {return station != null;})
+                .map(function (station) {return station.AdvertisedLocationName; })
                 .join(', ');
         };
     })
