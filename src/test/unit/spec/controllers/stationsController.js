@@ -71,23 +71,39 @@ describe('Unit: stationsController', function () {
             expect($filter('stationIdsToNames')).not.toBeNull();
         });
         
-        it('should translate id to name', inject(function ($filter) {
-            expect($filter('stationIdsToNames')(["Väy",  "N", "Käe", "Jps"], scope))
+        it('should translate id to name', inject(function (stationIdsToNamesFilter) {
+            expect(stationIdsToNamesFilter(["Väy",  "N", "Käe", "Jps"], scope))
                   .toBe("Västeraspby, Nässjö C, Källene, Järpås");
         }));
         
-        it('should skip invalid signatures', inject(function ($filter) {
-            expect($filter('stationIdsToNames')(["Väy",  "N", "KäeFel", "Jps"], scope))
+        it('should skip invalid signatures', inject(function (stationIdsToNamesFilter) {
+            expect(stationIdsToNamesFilter(["Väy",  "N", "KäeFel", "Jps"], scope))
                   .toBe("Västeraspby, Nässjö C, Järpås");
         }));
         
-        it('should cope with empty list', inject(function ($filter) {
-            expect($filter('stationIdsToNames')([], scope)).toBe("");
+        it('should cope with empty list', inject(function (stationIdsToNamesFilter) {
+            expect(stationIdsToNamesFilter([], scope)).toBe("");
         }));
 
-        it('should cope with null', inject(function ($filter) {
-            expect($filter('stationIdsToNames')(null, scope)).toBe("");
+        it('should cope with null', inject(function (stationIdsToNamesFilter) {
+            expect(stationIdsToNamesFilter(null, scope)).toBe("");
         }));
 
+    });
+    
+    describe('Filter arrayToList', function () {
+        it('should exist', function ($filter) {
+            expect($filter('arrayToList')).not.toBeNull();
+        });
+        
+        it('should concatenate with default separator comma', inject(function (arrayToListFilter) {
+            expect(arrayToListFilter(["A",  "B", "C", "D"]))
+                  .toBe("A, B, C, D");
+        }));
+
+        it('should concatenate with custom separator', inject(function (arrayToListFilter) {
+            expect(arrayToListFilter(["A",  "B", "C", "D"], ":"))
+                  .toBe("A:B:C:D");
+        }));
     });
 });
