@@ -1,8 +1,7 @@
 /*global jasmine, module, it, beforeEach, inject, describe, expect */
 describe('Unit: stationsController', function () {
     "use strict";
-    var ctrl, scope, q;
-     var deferred, spyPromise, TAPIService;
+    var ctrl, scope, q, deferred, spyPromise, TAPIService;
     
     // Load our controller module
     beforeEach(module('Trafikinfo.controllers'));
@@ -65,7 +64,7 @@ describe('Unit: stationsController', function () {
                 {"AdvertisedLocationName": "Nässjö C", "LocationSignature": "N", "Prognosticated": true},
                 {"AdvertisedLocationName": "Källene", "LocationSignature": "Käe", "Prognosticated": false},
                 {"AdvertisedLocationName": "Järpås", "LocationSignature": "Jps", "Prognosticated": true}];
-        }); 
+        });
         
         it('should exist', function ($filter) {
             expect($filter('stationIdsToNames')).not.toBeNull();
