@@ -1,57 +1,21 @@
 <!DOCTYPE html>
 <html ng-app="TrafikinfoApp">
 <head>
-<meta charset="UTF-8">
-<title>Trafikinfo Test</title>
-<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Trafikinfo Test</title>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <script src="bower_components/angularjs/angular.min.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-route/angular-route.min.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
 </head>
 
 <body>
 
-    <script type="text/ng-template" id="customTemplate.html">
-      <a>
-          <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
-          <i>({{match.model.AdvertisedLocationName}})</i>
-      </a>
-    </script>
+    <div ng-view></div>    
     
-    <div class="container-fluid">
-    <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="stationsController"> 
-        <h1>Avgångar</h1>
-        <input type="text" 
-               placeholder="Station" 
-               ng-model="selectedStation"
-               typeahead="station as station.AdvertisedLocationName for station in stations | filter:$viewValue | limitTo:10"  
-               typeahead-min-length='1' 
-               class="form-control ng-valid-editable" 
-               typeahead-on-select="getAnnouncements($model.LocationSignature)" 
-               typeahead-template-url="customTemplate.html" >
-
-        <br><br>
-        <table class="table table-striped">
-            <tr>
-                <th>Tid</th>
-                <th>Till</th>
-                <th>Spår</th>
-                <th>Tåg</th>
-            </tr>
-            <tr ng-repeat="x in announcements" ng-class="{danger: x.Canceled, warning:x.Deviation }">
-                <td>{{x.AdvertisedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
-                <td>{{x.ToLocation | stationIdsToNames:this}}</td>
-                <td>{{x.TrackAtLocation}}</td>            
-                <td>{{x.AdvertisedTrainIdent}}</td>            
-            </tr>
-        </table>
-
-    </form>
-    </div>
-    
-    
-    <script src="bower_components/angularjs/angular.min.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>
     
 </body>
 

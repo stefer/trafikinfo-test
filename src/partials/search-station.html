@@ -1,0 +1,37 @@
+<script type="text/ng-template" id="customTemplate.html">
+  <a>
+      <span bind-html-unsafe="match.label | typeaheadHighlight:query"></span>
+      <i>({{match.model.AdvertisedLocationName}})</i>
+  </a>
+</script>
+
+<div class="container-fluid">
+    <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="stationsController"> 
+        <h1>Avgångar</h1>
+        <input type="text" 
+               placeholder="Station" 
+               ng-model="selectedStation"
+               typeahead="station as station.AdvertisedLocationName for station in stations | filter:$viewValue | limitTo:10"  
+               typeahead-min-length='1' 
+               class="form-control ng-valid-editable" 
+               typeahead-on-select="getAnnouncements($model.LocationSignature)" 
+               typeahead-template-url="customTemplate.html" >
+
+        <br><br>
+        <table class="table table-striped">
+            <tr>
+                <th>Tid</th>
+                <th>Till</th>
+                <th>Spår</th>
+                <th>Tåg</th>
+            </tr>
+            <tr ng-repeat="x in announcements" ng-class="{danger: x.Canceled, warning:x.Deviation }">
+                <td>{{x.AdvertisedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
+                <td>{{x.ToLocation | stationIdsToNames:this}}</td>
+                <td>{{x.TrackAtLocation}}</td>            
+                <td><a href="#/train/{{x.AdvertisedTrainIdent}}">{{x.AdvertisedTrainIdent}}</a></td>
+            </tr>
+        </table>
+
+    </form>
+</div>

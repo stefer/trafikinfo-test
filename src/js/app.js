@@ -1,7 +1,23 @@
 angular.module('TrafikinfoApp', [
     'ui.bootstrap', 
+    'ngRoute',
     'Trafikinfo.controllers', 
-    'Trafikinfo.services']);
+    'Trafikinfo.services'])
+.config(['$routeProvider',
+  function($routeProvider) {
+    $routeProvider.
+      when('/search', {
+        templateUrl: 'partials/search-station.html',
+        controller: 'stationsController'
+      }).
+      when('/train/:trainId', {
+        templateUrl: 'partials/train.html',
+        controller: 'trainController'
+      }).
+      otherwise({
+        redirectTo: '/search'
+      });
+  }]);
 
 if (!Array.prototype.find) {
   Array.prototype.find = function(predicate) {

@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="trainController"> 
+        <h1>Avgångar för {{trainId}}</h1>
+        <table class="table table-striped">
+            <tr>
+                <th>Annonserad</th>
+                <th>Estimerad</th>
+                <th>Faktisk</th>
+                <th>Station</th>
+                <th>Spår</th>
+            </tr>
+            <tr ng-repeat="x in trainAnnouncements" ng-class="{danger: x.Canceled, warning:x.Deviation }">
+                <td>{{x.AdvertisedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
+                <td>{{x.EstimatedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
+                <td>{{x.TimeAtLocation | date:'dd MMM HH:mm'}}</td>            
+                <td>{{x.LocationSignature| stationIdToName:this}}</td>
+                <td>{{x.TrackAtLocation}}</td>            
+            </tr>
+        </table>
+    </form>
+</div>

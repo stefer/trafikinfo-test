@@ -20,6 +20,23 @@ angular.module('Trafikinfo.controllers', [])
 
         TrafikinfoAPIService.getStations().success(function (response) {
             $scope.stations = response.RESPONSE.RESULT[0].TrainStation;
+            TrafikinfoAPIService.cachedStations = $scope.stations;
+        });
+    })
+    .controller('trainController', function ($scope, TrafikinfoAPIService, $routeParams) {
+        "use strict";
+        $scope.trainAnnouncements = [];
+        $scope.trainId = $routeParams.trainId;
+
+        $scope.getStation = function (stationId) {
+            return (TrafikinfoAPIService.cachedStations || []).find(function (element, index, array) {
+                return element.LocationSignature === stationId;
+            });
+        };
+
+    
+        TrafikinfoAPIService.getTrainAnnouncements($scope.trainId).success(function (response) {
+            $scope.trainAnnouncements = response.RESPONSE.RESULT[0].TrainAnnouncement;
         });
     })
     .filter('stationIdsToNames', function () {
@@ -30,6 +47,12 @@ angular.module('Trafikinfo.controllers', [])
                 .filter(function (station) {return station != null;})
                 .map(function (station) {return station.AdvertisedLocationName; })
                 .join(', ');
+        };
+    })
+    .filter('stationIdToName', function () {
+        "use strict";
+        return function (input, scope) {
+            return scope.$parent.getStation(input).AdvertisedLocationName;
         };
     })
     .filter('arrayToList', function () {
