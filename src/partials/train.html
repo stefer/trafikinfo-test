@@ -1,21 +1,23 @@
 <div class="container-fluid">
-    <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="trainController"> 
-        <h1>Avgångar för {{trainId}}</h1>
-        <table class="table table-striped">
-            <tr>
-                <th>Station</th>
-                <th>Spår</th>
-                <th>Annonserad</th>
-                <th>Estimerad</th>
-                <th>Faktisk</th>
-            </tr>
-            <tr ng-repeat="x in trainAnnouncements" ng-class="{danger: x.Canceled, warning:x.Deviation }">
-                <td>{{x.LocationSignature| stationIdToName:this}}</td>
-                <td>{{x.TrackAtLocation}}</td>            
-                <td>{{x.AdvertisedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
-                <td>{{x.EstimatedTimeAtLocation | date:'HH:mm'}}</td>
-                <td>{{x.TimeAtLocation | date:'HH:mm'}}</td>
-            </tr>
-        </table>
-    </form>
+    <div class="row">
+        <form class="form-search ng-scope ng-valid ng-binding ng-dirty" ng-controller="trainController"> 
+            <h1>Avgångar för {{trainId}}</h1>
+            <table class="table table-striped">
+                <tr>
+                    <th>Station</th>
+                    <th>Spår</th>
+                    <th>Annonserad</th>
+                    <th>Estimerad</th>
+                    <th>Faktisk</th>
+                </tr>
+                <tr ng-repeat="x in trainAnnouncements" ng-class="{danger: x.Canceled, warning:x.Deviation }">
+                    <td>{{x.LocationSignature| stationIdToName:this}}</td>
+                    <td>{{x.TrackAtLocation}}</td>            
+                    <td>{{x.AdvertisedTimeAtLocation | date:'dd MMM HH:mm'}}</td>
+                    <td>{{x.EstimatedTimeAtLocation | date:'HH:mm'}}</td>
+                    <td>{{x.TimeAtLocation | date:'HH:mm'}}</td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </div>
