@@ -36,7 +36,39 @@ angular.module('Trafikinfo.controllers', [])
 
     
         TrafikinfoAPIService.getTrainAnnouncements($scope.trainId).success(function (response) {
-            $scope.trainAnnouncements = response.RESPONSE.RESULT[0].TrainAnnouncement;
+            var announcements = response.RESPONSE.RESULT[0].TrainAnnouncement,
+                result = [],
+                input,
+                existing,
+                i;
+            
+            // We get both Avgang and Ankomst Activity types.
+            // The Ankomst Activity is needed to get the times for the end station.
+            // Here, we make sure that only one element for each station (and date) 
+            // are preserved in the answer
+            for (i = 0; i < announcements.length; i++) {
+                input = announcements[i];
+                existing = result.find(function (element, index, array) {
+                    return element.LocationSignature === input.LocationSignature &&
+                        element.AdvertisedTimeAtLocation.slice(0, 10) === input.AdvertisedTimeAtLocation.slice(0, 10);
+                });
+                
+                if (!existing) {
+                    result.push(input);
+                    existing = input;
+                }
+                
+                if (input.ActivityType === 'Avgang') {
+                    existing.AvgangAdvertisedTimeAtLocation = input.AdvertisedTimeAtLocation;
+                    existing.AvgangEstimatedTimeAtLocation = input.EstimatedTimeAtLocation;
+                    existing.AvgangTimeAtLocation = input.TimeAtLocation;
+                } else {
+                    existing.AnkomstAdvertisedTimeAtLocation = input.AdvertisedTimeAtLocation;
+                    existing.AnkomstEstimatedTimeAtLocation = input.EstimatedTimeAtLocation;
+                    existing.AnkomstTimeAtLocation = input.TimeAtLocation;
+                }
+            }
+            $scope.trainAnnouncements = result;
         });
     })
     .filter('stationIdsToNames', function () {
@@ -44,7 +76,7 @@ angular.module('Trafikinfo.controllers', [])
         return function (input, scope) {
             return (input || [])
                 .map(function (stationId) { return scope.getStation(stationId); })
-                .filter(function (station) {return station != null;})
+                .filter(function (station) {return station !== null; })
                 .map(function (station) {return station.AdvertisedLocationName; })
                 .join(', ');
         };

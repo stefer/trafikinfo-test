@@ -38,7 +38,7 @@ angular.module('Trafikinfo.services', [])
                                     "<GT name='AdvertisedTimeAtLocation' " +
                                                 "value='$dateadd(-00:15:00)' />" +
                                     "<LT name='AdvertisedTimeAtLocation' " +
-                                                "value='$dateadd(14:00:00)' />" +
+                                                "value='$dateadd(4:00:00)' />" +
                                 "</AND>" +
                                 "<GT name='EstimatedTimeAtLocation' value='$now' />" +
                             "</OR>" +
@@ -74,7 +74,8 @@ angular.module('Trafikinfo.services', [])
                         "<FILTER>" +
                             "<AND>" +
                                 "<EQ name='AdvertisedTrainIdent' value='" + trainId + "' />" +
-                                "<EQ name='ActivityType' value='Avgang' />" +
+                                "<GT name='AdvertisedTimeAtLocation' value='$dateadd(-04:00:00)' />" +
+                                "<LT name='AdvertisedTimeAtLocation' value='$dateadd(4:00:00)' />" +
                             "</AND>" +
                         "</FILTER>" +
                         // Just include wanted fields to reduce response size.
